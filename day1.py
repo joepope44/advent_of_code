@@ -202,12 +202,15 @@ raw_input = """1593
 import itertools as it
 import math
 
-split_input = raw_input.split("\n")
+# clean raw input text
 
+split_input = raw_input.split("\n")
 report = [int(string) for string in split_input]
 
 def create_combo(n):
     """[summary]
+    Create combinations of items in raw input text
+    If the sum of n items is 2020, multiply the two items together
 
     Args:
         n ([int]): Number of items to multiply together

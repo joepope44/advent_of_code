@@ -1022,12 +1022,20 @@ df['Letter Count'].between(df['Low'], df['High'], inclusive=True).sum()
 
 ### Part 2 
 
-# Add 1 to Low and High columns 
+'''
+Conditions need to be passed now 
+1) Letter appears in Low1 position, from 1-index (not 0-index)
+2) Letter appears in High1 position, from 1-index
+3) Letter does NOT appear in both Low1 and High1 
+'''
+# Add 1 to Low and High columns to adjust for non-0 index stated in problem
 
 df["Low1"] = df["Low"] - 1
 df["High1"] = df["High"] - 1
 
-df.apply(lambda row : row['Password'][row['Low']], axis = 1)
+df['Cond1'] = df.apply(lambda row : row['Password'][row['Low1']] == row['Letter'], axis = 1) # Condtion 1 
+df['Cond2'] = df.apply(lambda row : row['Password'][row['High1']] == row['Letter'], axis = 1) # Condition 2 
+df['Cond3'] = df['Cond1'] & df['Cond2'] # Condition 3
 
-df.head()
-
+# Filter to show Cond1 & Cond2 but not Cond3 and return number of rows 
+df[((df['Cond1'] == True )| (df['Cond2'] == True)) & (df['Cond3'] == False)].shape[0]
